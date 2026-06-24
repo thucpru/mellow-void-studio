@@ -228,7 +228,25 @@ const HEAD_INJECT =
   `function lock(){lockUntil=performance.now()+700;zero();var n=0;(function r(){zero();if(++n<45)requestAnimationFrame(r)})()}` +
   `function nav(){if(location.pathname!==lp){lp=location.pathname;lock()}}` +
   `['pushState','replaceState'].forEach(function(k){var o=history[k];history[k]=function(){var r=o.apply(this,arguments);nav();return r}});` +
-  `addEventListener('popstate',nav)})();</script>`;
+  `addEventListener('popstate',nav)})();` +
+  // "Let's Talk" lead capture: take over the Framer contact form (Name + Email +
+  // message) and POST it to our own Sellvoxa dashboard (public /api/contact ->
+  // contact_leads, CORS:*). Read fields by element type so the message comes from
+  // the <textarea> (Framer mislabels it name="Email"). Newsletter form (email
+  // only, no Name input) is left to Framer.
+  `(function(){var EP='https://sellvoxa.com/api/contact';` +
+  `function toast(m,ok){var t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:2147483647;padding:12px 18px;border-radius:10px;font:500 14px/1.4 Archivo,system-ui,sans-serif;color:#fff;max-width:90vw;box-shadow:0 8px 30px rgba(0,0,0,.25);background:'+(ok?'#16794b':'#9b2c2c')+';opacity:0;transition:opacity .25s';document.body.appendChild(t);requestAnimationFrame(function(){t.style.opacity='1'});setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove()},400)},5000)}` +
+  `document.addEventListener('submit',function(e){var f=e.target;if(!f||f.tagName!=='FORM')return;` +
+  `var nm=f.querySelector('input[name="Name"]'),em=f.querySelector('input[type="email"]'),ms=f.querySelector('textarea');` +
+  `if(!nm||!em)return;e.preventDefault();e.stopImmediatePropagation();` +
+  `var name=(nm.value||'').trim(),email=(em.value||'').trim(),message=ms?(ms.value||'').trim():'';` +
+  `if(!name||!email){toast('Please enter your name and email.',false);return}` +
+  `var btn=f.querySelector('[type="submit"]');if(btn)btn.style.pointerEvents='none';` +
+  `fetch(EP,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:name,email:email,message:message,locale:'en',source:location.href})})` +
+  `.then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||('HTTP '+r.status));return j})})` +
+  `.then(function(){toast("Thanks! I'll get back to you soon.",true);try{nm.value='';em.value='';if(ms)ms.value=''}catch(_){}if(btn)btn.style.pointerEvents=''})` +
+  `.catch(function(){toast("Couldn't send — please email thucpru@gmail.com",false);if(btn)btn.style.pointerEvents=''});` +
+  `},true)})();</script>`;
 
 // --- write pages -----------------------------------------------------------
 await rm(join(OUT, "work"), { recursive: true, force: true });
