@@ -315,3 +315,9 @@ for (const f of everyText) {
   if (changed) await writeFile(f, t);
 }
 console.log(`Applied content overrides (${ovrHits} file-hits): email, title brand, template CTA -> /work`);
+
+// --- SEO/AEO/GEO post-processing -------------------------------------------
+// Inject schema.org JSON-LD into every page and (re)write robots.txt,
+// sitemap.xml, llms.txt. Kept as a separate, idempotent module so it can also
+// be run standalone (`node scripts/seo.mjs`) after manual edits.
+await import("./seo.mjs");

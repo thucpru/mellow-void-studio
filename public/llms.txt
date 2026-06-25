@@ -1,0 +1,17 @@
+# Hi Thuc
+
+> Hi Thuc (hithuc.com) is the portfolio of an independent builder who designs and
+> ships AI-powered web and mobile products end-to-end — from idea to live,
+> revenue-ready product, without an agency price tag. Languages: English & Vietnamese.
+
+## Products / case studies
+- Sellvoxa — embeddable Voice AI Agent for any website ("Website Biết Nói"). https://sellvoxa.com/ · https://hithuc.com/work/sellvoxa
+- Lovdes — AI design assistant inside Figma & Photoshop. https://lovdes.com/ · https://hithuc.com/work/lovdes
+- Peachgen — all-in-one AI creative platform (images, video, voice). https://peachgen.com/ · https://hithuc.com/work/peachgen
+- Aimatee — mobile app to learn workplace English with AI colleagues (Android). https://aimatee.com/ · https://hithuc.com/work/aimatee
+
+## Writing
+- Blog: https://hithuc.com/blog — essays on shipping AI products solo, design-to-code loops, AI agents, and web vs mobile.
+
+## Contact
+- thucpru@gmail.com

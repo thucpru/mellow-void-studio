@@ -1,2 +1,10 @@
+# Hi Thuc — https://hithuc.com
+# Everything is public. AI answer-engine crawlers (GPTBot, ClaudeBot,
+# PerplexityBot, Google-Extended, Applebot-Extended, Bingbot…) match the
+# wildcard group and are intentionally ALLOWED — this is the entity hub we want
+# AI engines to read and cite (GEO).
+
 User-agent: *
 Allow: /
+
+Sitemap: https://hithuc.com/sitemap.xml
