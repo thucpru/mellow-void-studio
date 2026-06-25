@@ -267,9 +267,20 @@ for (const { route, html } of pages) {
   let out = fixMojibake(html)
     .replaceAll(DOMAIN, "/framer")          // assets -> local
     .replaceAll(LIVE, PROD);                // canonical/og:url -> production
+  // Social card image: the Framer source still ships the old template shot
+  // (BMKOu… — "SOFTWARE ENGINEER / Majd"). Repoint og:image + twitter:image to
+  // our own /og-image.png (committed under public/, not re-downloaded by mirror).
   out = out.replaceAll(
     'content="/framer/assets/BMKOu79jBtM2GOCccyl1NoizDoU.png"',
-    `content="${PROD}/framer/assets/BMKOu79jBtM2GOCccyl1NoizDoU.png"`
+    `content="${PROD}/og-image.png"`
+  );
+  // Declare the card's real dimensions (1200x630) so platforms render it on the
+  // first scrape. Only the og-image.png card tag is matched — page-specific
+  // article/work og:images keep their own (different) sizes.
+  out = out.replace(
+    /<meta(?=[^>]*og-image\.png)(?=[^>]*property="og:image")[^>]*>/i,
+    (m) =>
+      `${m}<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">`
   );
   // Put charset first so it stays within the 1024-byte window browsers use for
   // charset sniffing; HEAD_INJECT is large enough to push the original meta past it.
